@@ -16,5 +16,12 @@ class data_set_manager():
                     my_list.append(line)
             self.headers = headers 
             self.data_list = my_list
+    
+    def num_penguins(self):
+        total = 0
+        for _ in self.data_list:
+            total +=1
+        self.number_of_penguins = total
+        return total
 
     
