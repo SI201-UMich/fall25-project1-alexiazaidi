@@ -38,3 +38,24 @@ class data_set_manager():
                 self.data_dict[species] = {"total": 1, "islands": {island: 1}}
         return self.data_dict
     
+    def write_summary(self, output_file = "output.txt"):
+        with open(output_file, 'w') as file:
+            file.write(f'There are a total of {self.number_of_penguins} penguins in {self.file_name}\n')
+            file.write('-' * 40 + '\n')
+            order = ["first", "second", "third", "fourth", "fifth", "sixth"]
+            count1= 0
+            count2= 0
+            for species, info in self.data_dict.items():
+                file
+                file.write(f'{order[count1]} species -> {species}: {info["total"]}\n')
+                islands = info.get("islands")
+                if islands:
+                    for island, count in islands.items():
+                        file.write(f' {order[count2]} Island: {island}: {count}\n')
+                        count2 +=1
+                count1 +=1
+                count2 = 0
+                file.write('\n')
+            file.write('-' * 40 + '\n')
+            file.write(f'Species counted: {len(self.data_dict)}\n')
+    
