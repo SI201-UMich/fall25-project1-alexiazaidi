@@ -23,5 +23,18 @@ class data_set_manager():
             total +=1
         self.number_of_penguins = total
         return total
-
+    
+    def calculate_species_and_island(self):
+        for line in self.data_list:
+            line_list = line.split(",")
+            species = line_list[1].strip().strip('"')
+            island = line_list[2].strip().strip('"')
+            species_info = self.data_dict.get(species)
+            if species_info:
+                species_info["total"] += 1
+                islands = species_info["islands"]
+                islands[island] = islands.get(island, 0) + 1
+            else:
+                self.data_dict[species] = {"total": 1, "islands": {island: 1}}
+        return self.data_dict
     
