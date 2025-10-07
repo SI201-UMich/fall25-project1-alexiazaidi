@@ -4,6 +4,7 @@ class data_set_manager():
         self.data_dict = {}
     
     def load_data(self):
+        print(self.file_name)
         with open(self.file_name, 'r') as file:
             headers = []
             my_list = []
@@ -59,12 +60,12 @@ class data_set_manager():
             file.write('-' * 40 + '\n')
             file.write(f'Species counted: {len(self.data_dict)}\n')
 
-a = data_set_manager("penguins.csv")
+a = data_set_manager("fall25-project1-alexiazaidi/penguins.csv")
 a.load_data()
 a.calculate_species_and_island()
-a.num_penguins
+a.num_penguins()
 print(a.number_of_penguins)
 print(len(a.data_dict))
 print(len(a.data_dict))
-a.write_summary
+a.write_summary()
     
