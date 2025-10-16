@@ -5,10 +5,10 @@
 # - Eve: load_csv, count_island_gender, calculate_ratio, calculate_body_weights, also integrating the codes from eve and alexia (both main.py and test.py)
 # - Alexia: count_total_penguins, count_species_by_island
 # - Both: load_csv (the final version integrates our code) write_comprehensive_results, test cases for our own part of functions
-#
+# The main function is under test_penguins.py to perform test and analysis in the same time. So after running test_penguins.py, you will get the analysis result as well as the test result
 # AI Tools Used: 
 # Eve: used claude to ask it help load_csv function and write_comprehensive_results function; 
-# also use it to come up with edge cases for test cases.
+# also use it to come up with edge cases for test cases and refind the main function's structure
 # Alexia: I used ChatGPT to help me come up with my test cases for the avg_bill function as well as my bill_avg function
 
 import csv
@@ -35,7 +35,7 @@ def load_csv(penguins_file):
                 penguin = {}
                 
                 for key, value in row.items():
-                    # Skip the index column if it exists
+                    
                     if key == '' or key is None:
                         continue
                         
