@@ -59,7 +59,7 @@ Gentoo,Dream,,,200,4500,male,2008
         assert result[2]['bill_length_mm'] is None, "Should handle empty numeric fields as None"
         print(" Test 1 passed: Valid CSV loads correctly")
     finally:
-        # Clean up - remove test file
+        # Clean up 
         if os.path.exists(test_filename):
             os.remove(test_filename)
     
