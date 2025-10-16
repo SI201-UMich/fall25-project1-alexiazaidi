@@ -9,6 +9,7 @@
 # AI Tools Used: 
 # Eve: used claude to ask it help load_csv function and write_comprehensive_results function; 
 # also use it to come up with edge cases for test cases.
+# Alexia: I used ChatGPT to help me come up with my test cases for the avg_bill function
 
 import csv
 
@@ -187,6 +188,37 @@ def count_species_by_island(penguins):
     
     return species_data
 
+def avg_bill_length(penguins):
+    """
+    calculates average bill lnegth
+    """
+    my_dict = {}
+
+    for p in penguins:
+        if 'species' not in p or 'bill_length_mm' not in p:
+            continue
+
+        species = str(p['species']).strip()
+        bill_length = p['bill_length_mm']
+
+        if not species or bill_length is None:
+            continue
+
+        if species in my_dict:
+            my_dict[species].append(float(bill_length))
+        else:
+            my_dict[species] = [float(bill_length)]
+
+    for k in my_dict:
+        values = my_dict[k]
+        if values:
+            my_dict[k] = round(sum(values) / len(values), 2)
+        else:
+            my_dict[k] = "No data"
+
+    return my_dict
+
+
 # output functions
 
 def write_to_file(gender_stats, weight_stats, ratios, filename='penguin_analysis_results.txt'):
@@ -225,63 +257,70 @@ def write_to_file(gender_stats, weight_stats, ratios, filename='penguin_analysis
 
 
 def write_comprehensive_results(total_count, species_data, gender_stats, ratios, 
-                                 weight_stats, filename='comprehensive_penguin_analysis.txt'):
-
+                                weight_stats, bill_length_avgs,
+                                filename='comprehensive_penguin_analysis.txt'):
+    
     with open(filename, 'w') as file:
-        file.write('='*70+'\n')
+        file.write('=' * 70 + '\n')
         file.write('COMPREHENSIVE PENGUIN DATA ANALYSIS\n')
-        file.write('='*70+'\n\n')
+        file.write('=' * 70 + '\n\n')
         
         # Section 1: Overall Summary
         file.write('DATASET OVERVIEW\n')
-        file.write('-'*40+'\n')
+        file.write('-' * 40 + '\n')
         file.write(f'Total number of penguins: {total_count}\n')
         file.write(f'Number of species: {len(species_data)}\n')
-        file.write(f'Number of islands: {len(gender_stats)}\n')
-        file.write('\n')
+        file.write(f'Number of islands: {len(gender_stats)}\n\n')
         
         # Section 2: Species Distribution
-        file.write('='*70+'\n')
+        file.write('=' * 70 + '\n')
         file.write('SPECIES DISTRIBUTION BY ISLAND\n')
-        file.write('-'*40+'\n')
-        
-        for i, (species, info) in enumerate(sorted(species_data.items()), 1):
+        file.write('-' * 40 + '\n')
+        for i, species in enumerate(sorted(species_data), 1):
+            info = species_data[species]
             file.write(f'\nSpecies {i}: {species}\n')
             file.write(f'  Total count: {info["total"]}\n')
             file.write(f'  Island distribution:\n')
-            for island, count in sorted(info['islands'].items()):
-                percentage = (count / info['total']) * 100
+            for island in sorted(info['islands']):
+                count = info['islands'][island]
+                percentage = (count / info['total']) * 100 if info['total'] else 0
                 file.write(f'    - {island}: {count} ({percentage:.1f}%)\n')
         
         # Section 3: Gender Distribution
-        file.write('\n' + '='*70+'\n')
+        file.write('\n' + '=' * 70 + '\n')
         file.write('GENDER DISTRIBUTION BY ISLAND\n')
-        file.write('-'*40+'\n')
-        for island, counts in sorted(gender_stats.items()):
-            total_island = counts.get('male', 0) + counts.get('female', 0)
+        file.write('-' * 40 + '\n')
+        for island in sorted(gender_stats):
+            counts = gender_stats[island]
+            total_island = counts['male'] + counts['female']
             file.write(f"\nIsland: {island}\n")
-            file.write(f"  Males: {counts.get('male',0)}\n")
-            file.write(f"  Females: {counts.get('female', 0)}\n")
+            file.write(f"  Males: {counts['male']}\n")
+            file.write(f"  Females: {counts['female']}\n")
             file.write(f"  Total: {total_island}\n")
-            file.write(f"  Male:Female Ratio: {ratios.get(island, 'N/A')}\n")
+            file.write(f"  Male:Female Ratio: {ratios[island]}\n")
         
         # Section 4: Body Weight Analysis
         file.write("\n" + "=" * 70 + "\n")
         file.write("AVERAGE BODY WEIGHT (g) BY SPECIES, ISLAND, AND GENDER\n")
         file.write("-" * 40 + "\n")
-        
-        for species, islands in sorted(weight_stats.items()):
+        for species in sorted(weight_stats):
             file.write(f"\n{species}:\n")
-            for island, genders in sorted(islands.items()):
+            for island in sorted(weight_stats[species]):
                 file.write(f"  {island}:\n")
                 for gender in ['male', 'female']:
-                    if gender in genders:
-                        weight = genders[gender]
-                        if weight != 'No data':
-                            file.write(f"    {gender.capitalize()}: {weight} g\n")
-                        else:
-                            file.write(f"    {gender.capitalize()}: {weight}\n")
+                    if gender in weight_stats[species][island]:
+                        weight = weight_stats[species][island][gender]
+                        file.write(f"    {gender.capitalize()}: {weight} g\n")
         
+        # Section 5: Average Bill Length 
+        file.write("\n" + "=" * 70 + "\n")
+        file.write("AVERAGE BILL LENGTH (mm) BY SPECIES\n")
+        file.write("-" * 40 + "\n")
+        for species in sorted(bill_length_avgs):
+            avg_len = bill_length_avgs[species]
+            file.write(f"  {species}: {avg_len} mm\n")
+
         file.write("\n" + "=" * 70 + "\n")
         file.write("Analysis complete. Data processed successfully!\n")
         file.write("=" * 70 + "\n")
+
