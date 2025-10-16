@@ -38,14 +38,14 @@ def parse_csv_string_to_dict(csv_string):
 def test_load_csv():
     print("Testing load_csv...")
     
-    # Test 1: Valid CSV with all fields
+    # Test 1: CSV with all fields
     test_csv_content = """species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex,year
 Adelie,Biscoe,37.8,18.3,174,3400,female,2007
 Adelie,Biscoe,37.7,18.7,180,3600,male,2007
 Gentoo,Dream,,,200,4500,male,2008
 """
     
-    # Create test file using only open() - concepts from lecture
+    # Create test file 
     test_filename = 'test_data_1.csv'
     with open(test_filename, 'w') as f:
         f.write(test_csv_content)
@@ -63,7 +63,7 @@ Gentoo,Dream,,,200,4500,male,2008
         if os.path.exists(test_filename):
             os.remove(test_filename)
     
-    # Test 2: General case - verify all fields are loaded
+    # Test 2: General case 
     test_csv_content2 = """species,island,body_mass_g,sex,year
 Chinstrap,Torgersen,3800,female,2009
 """
@@ -89,7 +89,7 @@ Chinstrap,Torgersen,3800,female,2009
     assert result == [], "Non-existent file should return empty list"
     print(" Test 3 passed: Handles missing file")
     
-    # Test 4: Edge case - empty values
+    # Test 4: Edge case 
     test_csv_empty = """species,island,body_mass_g,sex,year
 Adelie,,,male,
 """
@@ -112,7 +112,7 @@ def test_count_island_gender():
     """Test the count_island_gender function."""
     print("\nTesting count_island_gender...")
     
-    # Test 1: General case - normal distribution
+    # Test 1: General case 
     test_data = [
         {'island': 'Biscoe', 'sex': 'male'},
         {'island': 'Biscoe', 'sex': 'female'},
@@ -127,7 +127,7 @@ def test_count_island_gender():
     assert result['Dream']['female'] == 2, "Dream should have 2 females"
     print(" Test 1 passed: Normal distribution counted")
     
-    # Test 2: General case - case insensitive
+    # Test 2: General case 
     test_data2 = [
         {'island': 'Torgersen', 'sex': 'Male'},
         {'island': 'Torgersen', 'sex': 'FEMALE'},
@@ -138,17 +138,17 @@ def test_count_island_gender():
     assert result2['Torgersen']['female'] == 1, "Should handle uppercase FEMALE"
     print(" Test 2 passed: Case insensitive counting")
     
-    # Test 3: Edge case - empty list
+    # Test 3: Edge case 
     result3 = count_island_gender([])
     assert result3 == {}, "Empty list returns empty dict"
     print(" Test 3 passed: Empty input handled")
     
-    # Test 4: Edge case - missing data
+    # Test 4: Edge case 
     test_data4 = [
-        {'island': '', 'sex': 'male'},      # Missing island
-        {'island': 'Biscoe', 'sex': ''},    # Missing sex
-        {'island': 'Dream', 'sex': 'other'}, # Invalid sex
-        {'island': 'Dream', 'sex': 'male'}   # Valid entry
+        {'island': '', 'sex': 'male'},      
+        {'island': 'Biscoe', 'sex': ''},    
+        {'island': 'Dream', 'sex': 'other'}, 
+        {'island': 'Dream', 'sex': 'male'}   
     ]
     result4 = count_island_gender(test_data4)
     assert len(result4) == 1, "Should only have one island"
@@ -161,7 +161,7 @@ def test_calculate_ratio():
     """Test the calculate_ratio function."""
     print("\nTesting calculate_ratio...")
     
-    # Test 1: General case - normal ratios
+    # Test 1: General case 
     test_counts = {
         'Biscoe': {'male': 100, 'female': 50},
         'Dream': {'male': 30, 'female': 40}
@@ -171,7 +171,7 @@ def test_calculate_ratio():
     assert result['Dream'] == 0.75, "30:40 ratio should be 0.75"
     print(" Test 1 passed: Normal ratios calculated")
     
-    # Test 2: General case - 1:1 ratio
+    # Test 2: General case 
     test_counts2 = {
         'Island1': {'male': 25, 'female': 25},
         'Island2': {'male': 1, 'female': 1}
@@ -181,7 +181,7 @@ def test_calculate_ratio():
     assert result2['Island2'] == 1.0, "1:1 should be 1.0"
     print(" Test 2 passed: Equal ratios calculated")
     
-    # Test 3: Edge case - division by zero
+    # Test 3: Edge case 
     test_counts3 = {
         'MaleOnly': {'male': 75, 'female': 0}
     }
@@ -189,7 +189,7 @@ def test_calculate_ratio():
     assert result3['MaleOnly'] == "No females", "Should handle no females"
     print(" Test 3 passed: Division by zero handled")
     
-    # Test 4: Edge case - no penguins
+    # Test 4: Edge case 
     test_counts4 = {
         'Empty': {'male': 0, 'female': 0},
         'FemaleOnly': {'male': 0, 'female': 100}
@@ -204,7 +204,7 @@ def test_calculate_body_weights():
     """Test the calculate_body_weights function."""
     print("\nTesting calculate_body_weights...")
     
-    # Test 1: General case - calculate averages
+    # Test 1: General case 
     test_data = [
         {'species': 'Adelie', 'island': 'Biscoe', 'sex': 'male', 'body_mass_g': 4000.0},
         {'species': 'Adelie', 'island': 'Biscoe', 'sex': 'male', 'body_mass_g': 4100.0},
@@ -217,7 +217,7 @@ def test_calculate_body_weights():
     assert result['Adelie']['Biscoe']['female'] == 3600.0, "Female average should be 3600.0"
     print(" Test 1 passed: Averages calculated correctly")
     
-    # Test 2: General case - multiple species/islands
+    # Test 2: General case 
     test_data2 = [
         {'species': 'Gentoo', 'island': 'Dream', 'sex': 'male', 'body_mass_g': 5000.0},
         {'species': 'Gentoo', 'island': 'Dream', 'sex': 'male', 'body_mass_g': 5200.0},
@@ -230,12 +230,12 @@ def test_calculate_body_weights():
     assert result2['Chinstrap']['Torgersen']['female'] == 3800.0, "Chinstrap average"
     print(" Test 2 passed: Multiple species handled")
     
-    # Test 3: Edge case - empty list
+    # Test 3: Edge case 
     result3 = calculate_body_weights([])
     assert result3 == {}, "Empty input returns empty dict"
     print(" Test 3 passed: Empty input handled")
     
-    # Test 4: Edge case - missing values
+    # Test 4: Edge case 
     test_data4 = [
         {'species': 'Adelie', 'island': 'Biscoe', 'sex': 'male', 'body_mass_g': None},
         {'species': 'Adelie', 'island': 'Biscoe', 'sex': 'male', 'body_mass_g': 4000.0},
@@ -255,7 +255,7 @@ def test_count_total_penguins():
     """Test the count_total_penguins function - Using teammate's test cases."""
     print("\nTesting count_total_penguins...")
     
-    # Test 1: Single penguin (from teammate's test)
+    # Test 1: Single penguin 
     test_data = [parse_csv_string_to_dict('"1","Adelie","Torgersen",39.1,18.7,181,3750,"male",2007')]
     result = count_total_penguins(test_data)
     assert result == 1, f"Should count 1 penguin, got {result}"
@@ -291,7 +291,7 @@ def test_count_species_by_island():
     """Test the count_species_by_island function - Using teammate's test cases."""
     print("\nTesting count_species_by_island...")
     
-    # Test 1: Multiple species and islands (from teammate's test)
+    # Test 1: Multiple species and islands 
     test_data = [
         parse_csv_string_to_dict('"1","Adelie","Torgersen",39.1,18.7,181,3750,"male",2007'),
         parse_csv_string_to_dict('"2","Adelie","Torgersen",39.5,17.4,186,3800,"female",2007'),
@@ -308,7 +308,7 @@ def test_count_species_by_island():
     assert result == expected, f"Test 1 failed. Expected {expected}, got {result}"
     print(" Test 1 passed: Multiple species and islands counted correctly")
     
-    # Test 2: Different distribution (from teammate's test)
+    # Test 2: Different distribution 
     test_data2 = [
         parse_csv_string_to_dict('"10","Gentoo","Biscoe",45.2,14.8,215,4550,"male",2008'),
         parse_csv_string_to_dict('"11","Gentoo","Biscoe",45.0,14.9,210,4600,"female",2008'),
@@ -324,14 +324,14 @@ def test_count_species_by_island():
     assert result2 == expected2, f"Test 2 failed. Expected {expected2}, got {result2}"
     print(" Test 2 passed: Different distribution calculated")
     
-    # Test 3: Empty list (from teammate's test)
+    # Test 3: Empty list
     test_data3 = []
     result3 = count_species_by_island(test_data3)
     expected3 = {}
     assert result3 == expected3, "Empty list should return empty dict"
     print(" Test 3 passed: Empty input handled")
     
-    # Test 4: Whitespace handling (from teammate's test)
+    # Test 4: Whitespace handling 
     test_data4 = [
         parse_csv_string_to_dict(' "21" ,  "Adelie" ,  "Torgersen" ,39.1,18.7,181,3750,"male",2007'),
         parse_csv_string_to_dict('"22","Adelie"," Torgersen " ,39.5,17.4,186,3800,"female",2007'),
@@ -353,7 +353,7 @@ def test_avg_bill_length():
     """Test the avg_bill_length function."""
     print("\nTesting avg_bill_length...")
 
-    # Test 1: General case - multiple species
+    # Test 1: General case 
     test_data1 = [
         parse_csv_string_to_dict('"1","Adelie","Biscoe",40.1,18.7,181,3750,"male",2007'),
         parse_csv_string_to_dict('"2","Adelie","Biscoe",39.9,18.2,180,3600,"female",2007'),
@@ -433,23 +433,23 @@ def main():
     
     # Perform all analyses
     
-    # Analysis 1: Total count (teammate's function)
+    # Analysis 1: Total count 
     total_count = count_total_penguins(penguins)
     print(f"Total penguins: {total_count}")
     
-    # Analysis 2: Species by island (teammate's function)
+    # Analysis 2: Species by island 
     species_data = count_species_by_island(penguins)
     print(f"Analyzed {len(species_data)} species across multiple islands.")
     
-    # Analysis 3: Gender distribution (your function)
+    # Analysis 3: Gender distribution 
     gender_counts = count_island_gender(penguins)
     print(f"Analyzed gender distribution across {len(gender_counts)} islands.")
     
-    # Analysis 4: Gender ratios (your function)
+    # Analysis 4: Gender ratios
     ratios = calculate_ratio(gender_counts)
     print("Calculated male:female ratios.")
     
-    # Analysis 5: Body weights (your function)
+    # Analysis 5: Body weights 
     weight_stats = calculate_body_weights(penguins)
     print(f"Calculated body weight statistics for {len(weight_stats)} species.")
     
@@ -457,14 +457,14 @@ def main():
     bill_length_avgs = avg_bill_length(penguins)
     print(f"Calculated bill length statistics for {len(bill_length_avgs)} species.")
     
-    # Write results to files
+   
     
-    # Original output (for backward compatibility with your tests)
+    # Original output 
     output_file1 = 'penguin_analysis_results.txt'
     write_to_file(gender_counts, weight_stats, ratios, output_file1)
     print(f"\nOriginal results written to '{output_file1}'")
     
-    # Comprehensive output (combining both teammates' work)
+    # Comprehensive output
     output_file2 = 'comprehensive_penguin_analysis.txt'
     write_comprehensive_results(total_count, species_data, gender_counts, 
                                  ratios, weight_stats, bill_length_avgs, output_file2)
