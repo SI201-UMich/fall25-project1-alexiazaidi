@@ -9,7 +9,7 @@
 # AI Tools Used: 
 # Eve: used claude to ask it help load_csv function and write_comprehensive_results function; 
 # also use it to come up with edge cases for test cases.
-# Alexia: I used ChatGPT to help me come up with my test cases for the avg_bill function
+# Alexia: I used ChatGPT to help me come up with my test cases for the avg_bill function as well as my bill_avg function
 
 import csv
 
