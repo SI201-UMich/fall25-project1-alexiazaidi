@@ -261,13 +261,13 @@ def test_count_total_penguins():
     assert result == 1, f"Should count 1 penguin, got {result}"
     print(" Test 1 passed: Single penguin counted")
     
-    # Test 2: Empty list (from teammate's test)
+    # Test 2: Empty list 
     test_data2 = []
     result2 = count_total_penguins(test_data2)
     assert result2 == 0, "Empty list should return 0"
     print(" Test 2 passed: Empty list handled")
     
-    # Test 3: Two penguins (from teammate's test)
+    # Test 3: Two penguins 
     test_data3 = [
         parse_csv_string_to_dict('"1","Adelie","Torgersen",39.1,18.7,181,3750,"male",2007'),
         parse_csv_string_to_dict('"2","Adelie","Torgersen",39.5,17.4,186,3800,"female",2007')
@@ -276,7 +276,7 @@ def test_count_total_penguins():
     assert result3 == 2, "Should count 2 penguins"
     print(" Test 3 passed: Two penguins counted")
     
-    # Test 4: Three penguins (from teammate's test)
+    # Test 4: Three penguins 
     test_data4 = [
         parse_csv_string_to_dict('"1","Adelie","Torgersen",39.1,18.7,181,3750,"male",2007'),
         parse_csv_string_to_dict('"2","Adelie","Torgersen",39.5,17.4,186,3800,"female",2007'),
